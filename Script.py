@@ -11,7 +11,7 @@ from System.Collections.Generic import List #możiwość tworzenia list
 doc = __revit__.ActiveUIDocument.Document #aktualnie pobierany projekt Revit
 foot = 3.28084  # konwersja ft -> m
 
-# --------------------------------------------------------------------------------------------------------------------------- parametry globalne -------------------------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------- global parameters -------------------------------------------------------------------------------------------------------------------------------------------------------------
 max_glebokosc_m = 25.0
 wys_standard_pietra_m = 3.0
 wys_standard_pietra_ft = wys_standard_pietra_m * foot
@@ -19,7 +19,7 @@ liczba_pieter = 4
 cofniecie_lica_m = 2.4
 cofniecie_lica_ft = cofniecie_lica_m * foot
 
-# --------------------------------------------------------------------------------------------------------------------------- komunikat startowy -------------------------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------- startup message -------------------------------------------------------------------------------------------------------------------------------------------------------------
 main_message = (
     "The urban composition will be created taking into account fixed design parameters, functional assumptions, and formal and legal conditions in accordance with the Local Spatial Development Plan:\n\n"
     "1) Maximum building area: 60%.\n"
@@ -39,7 +39,7 @@ main_message = (
 
 TaskDialog.Show("Start", main_message)
 
-# ------------------------------------------------------------------------------------------------------------------ pobieranie wartości od użytkownika --------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------ retrieving values from the user --------------------------------------------------------------------------------------------------------------------------------------------------------------
 try:
    
     glebokosc_kolumn_m = float(Interaction.InputBox( #DK
@@ -81,7 +81,7 @@ except:
     TaskDialog.Show("Error", "An invalid value has been entered. The script has been terminated.")
     sys.exit()
 
-# walidacje MPZP; na potrzebę przyjęcia danych "krańcowych" ---------------------------------------------------
+# validations of local zoning plans; the need to accept “extreme” data ---------------------------------------------------
 if glebokosc_kolumn_m + glebokosc_budynku_m > max_glebokosc_m:
     TaskDialog.Show("Non-compliance with the local zoning plan“, ”The total depth exceeds {} m.".format(max_glebokosc_m))
     sys.exit()
@@ -91,7 +91,7 @@ if glebokosc_kolumn_m < min_glebokosc_podcienia_m:
     TaskDialog.Show("Non-compliance with the local zoning plan“, ”The total area of the ground floor constitutes more than 60% of the total area of the first floor; The depth of the columns is too small in relation to the depth of the building. (min {:.2f}m).".format(min_glebokosc_podcienia_m))
     sys.exit()
 
-# działania na danych i konwersje jednostek ---------------------------------------------------------------
+# data operations and unit conversions ---------------------------------------------------------------
 col_spacing_ft = col_spacing_m * foot 
 col_depth_ft = (glebokosc_kolumn_m / 2.0) * foot
 glebokosc_kolumn_ft = glebokosc_kolumn_m * foot
@@ -101,7 +101,7 @@ cofniecie_iv_ft = cofniecie_iv_m * foot
 glebokosc_audytorium_ns_ft = glebokosc_audytorium_ns_m * foot
 glebokosc_audytorium_35m_ft = 35.0 * foot
 
-# ----------------------------------------------------------------------------------------------------------------------------------- ID linii modelu i łuków -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------- Model line and arc ID -----------------------------------------------------------------------------
 line_ids = [ElementId(1266833), ElementId(1267037), ElementId(1267137), ElementId(1267259),
             ElementId(1265069), ElementId(1265253), ElementId(1265357), ElementId(1266049),
             ElementId(1266217), ElementId(1267547), ElementId(1267677), ElementId(1268120),
@@ -114,7 +114,7 @@ arc_ids = [ElementId(1289914), ElementId(1290384)]
 auditorium_line_ids = [ElementId(1282579), ElementId(1283599), ElementId(1283696),
                        ElementId(1285389), ElementId(1285445), ElementId(1288166)]
 
-# ------------------------------------------------------------------------------------------------------- poziomy, wewnętrzne zabezpieczenie, gdyby nie było utworzonych minimalnej liczny o --------------------
+# ------------------------------------------------------------------------------------------------------- levels, internal security, if the minimum number of o had not been created  --------------------
 levels = sorted(list(FilteredElementCollector(doc).OfClass(Level)), key=lambda x: x.Elevation) #kolektor przeszukujący cały dokument projektowy, tworzy całą listę ze zmiennymi X jako współżędna
 if len(levels) < 2: #wybranie elementu level czyli poziom, sprawdza ile elementów znajduej się na liście "levels" --> obliczanie wysokości parteru (jeden poziom lub zadnego --> wróba dowołania przerwie się błędem)
     TaskDialog.Show("Error“, ”The project must contain at least two levels.")
@@ -126,14 +126,14 @@ liczba_pieter_wyzszych = liczba_pieter - 1
 wys_powyzej_ft = liczba_pieter_wyzszych * wys_standard_pietra_ft
 wysokosc_calkowita_ft = wysokosc_parteru_ft + wys_powyzej_ft
 
-# --- Znajdź Poziom IV (level_iv) wcześniej ---
+# --- Find Level IV (level_iv) earlier ---
 level_iv = None
 for lvl in levels:
     if "IV" in lvl.Name.upper() or lvl.Name.startswith("4") or "POZIOM 4" in lvl.Name.upper():
         level_iv = lvl
         break
 
-# --------------------------------------------------------------------------------------------- wybór typu ściany / kolumny --------------------
+# --------------------------------------------------------------------------------------------- select wall/column type --------------------
 wall_type = None
 wall_type_generic = None
 wall_type_first = None
@@ -167,13 +167,13 @@ if not wall_type or not col_type:
     TaskDialog.Show("Error“, ”No wall or column type in the design.")
     sys.exit()
 
-# ----------Wybór typu stropu; na potrzeby projekotwe - identyczny ---
+# ----------Choice of ceiling type; for design purposes - identical ---
 floor_type = FilteredElementCollector(doc).OfClass(FloorType).FirstElement()
 if not floor_type:
     TaskDialog.Show("Error“, ”No floor type (FloorType) in the project.")
     sys.exit()
     
-# -------------------------------------------------------------------------------------------------------- transakcja --------------------
+# -------------------------------------------------------------------------------------------------------- transaction --------------------
 
 # --- DODANO: Funkcja pomocnicza do tworzenia stropów ---
 def create_floor_from_curves(curves_list, level, f_type, height_offset=0.0): #definiowanie kształtu stropu
@@ -205,7 +205,7 @@ def create_floor_from_curves(curves_list, level, f_type, height_offset=0.0): #de
         print("Error creating ceiling at level {}: {}".format(level.Name, e))
         return None
         
-# ---------------------------------------------------------------------rozpoczęcie tranzakcji------------
+# ---------------------------------------------------------------------transaction initiation------------
 
 t = Transaction(doc, "Generative building with safe offsets")
 t.Start()
@@ -214,7 +214,7 @@ if not col_type.IsActive:
     col_type.Activate()
     doc.Regenerate()
 
-# -------------------------------------------------------------------------------------------------Pętla I - budynki główne (linie proste) --------------------
+# -------------------------------------------------------------------------------------------------Loop I - main buildings (straight lines) --------------------
 for line_id in line_ids:
     try:
         line_elem = doc.GetElement(line_id) #metoda pobiera element z bazy danych na podstawie jego ID 
@@ -296,7 +296,7 @@ for line_id in line_ids:
     except Exception as e:
         print("Error in line {}: {}".format(line_id.Value, e))
 
-# -------------------------------------------------------------------------------------------------- dodatkowa kondygnacja IV (bez rollback) --------------------
+# -------------------------------------------------------------------------------------------------- additional floor IV (without rollback) --------------------
 wys_dodatkowej_kondygnacji_m = 4.0 #wskazanie wysokości
 wys_dodatkowej_kondygnacji_ft = wys_dodatkowej_kondygnacji_m * foot #konwersja jednostek
 linie_dodatkowej_kondygnacji = [ElementId(1265253), ElementId(1268120), ElementId(1278942)] #tworzą sie na jej podstawie
@@ -346,7 +346,7 @@ if level_iv: #rozpoczyna pętlę dla Level IV
 else:
     TaskDialog.Show("Attention,“ ”Level ‘IV’ not found. The floor has not been created.")
 
-# ----------------------------------------------------------------------------------------------------------------------- audytorium --------------------
+# ----------------------------------------------------------------------------------------------------------------------- auditorium --------------------
 wysokosc_audytorium_6m_ft = 6.0 * foot #konwersja jednostek
 ids_audytorium_6m = [1283599, 1283696, 1285389, 1285445]
 
@@ -446,7 +446,7 @@ for auditorium_line_id in auditorium_line_ids: #rozpoczęcie po wszystkich linia
     except Exception as e:
         print("Auditorium error (line {}): {}".format(auditorium_line_id.Value, e))
 
-# ------------------------------------------------------------------------------------------------------------------ łuki łączące (bezpieczne offsety) --------------------
+# ------------------------------------------------------------------------------------------------------------------ safe offsety --------------------
 adjusted_arcs = []
 buffer_ft = 0.2  # większy bufor niż wcześniej (ok. 6 cm), żeby uniknąć równości promienia/offset --> unjoin
 
@@ -590,7 +590,7 @@ for arc_id in arc_ids:
     except Exception as e:
         print("Failed to process the arc {}: {}".format(arc_id.Value, e))
 
-# -------------------------------------------------------------------------------------------------------------- dodatkowa kondygnacja 4 m nad łukami --------------------
+# -------------------------------------------------------------------------------------------------------------- additional floor 4 m above the arches --------------------
 try: # znajdź poziom "IV level"
     poziom_IV = None #ustawienie "pustej zmiennej"
     for lvl in FilteredElementCollector(doc).OfClass(Level): #szukanie poziomów w dokumencie 
@@ -666,7 +666,7 @@ try: # znajdź poziom "IV level"
 except Exception as e: # To jest 'except' dla zewnętrznego 'try' - łapie błąd np. przy wyszukiwaniu poziomu
     print("General error when creating floors above arches:", e)
 
-# ---------------------------------------------------------------------------------------------------------------- NOWA SEKCJA: ściany specjalne 16m na łukach --------------------
+# ---------------------------------------------------------------------------------------------------------------- special walls 16m on curves --------------------
 try:
     wysokosc_16m_ft = 16.0 * foot # Ustawia docelową wysokość na 16.0 metrów i konwertuje ją na stopy
     high_arc_ids = [ElementId(1302356), ElementId(1302731)] #definicja nowych łuków
@@ -694,7 +694,7 @@ try:
 except Exception as e: #obsługa dla błędu całego modułu
     print("General error when creating 16m walls:", e)
 
-# ----------------------------------------------------------------------------------------------------------------------- OBLICZANIE POWIERZCHNI PARTERU --------------------
+# ----------------------------------------------------------------------------------------------------------------------- CALCULATING THE AREA OF THE GROUND FLOOR --------------------
 import math
 
 pow_audytorium_m2 = glebokosc_audytorium_ns_m * 17.0 # 1. Audytorium; prostokąt: głębokość audytorium (użytkownik) x 17.0 m
@@ -748,7 +748,7 @@ raport = (
 
 TaskDialog.Show("Building area – Ground floor", raport)
 
-# ------------------------------------------------------------------------------------------------------------------ OBLICZANIE POWIERZCHNI I–III PIĘTRA --------------------
+# ------------------------------------------------------------------------------------------------------------------ CALCULATION OF THE AREA OF THE FIRST TO THIRD FLOORS --------------------
 import math
 
 # --- ZMIENNE POMOCNICZE ---
@@ -804,7 +804,7 @@ raport_pietra = (
 
 TaskDialog.Show("Area – 1st–3rd floor", raport_pietra)
 
-# ----------------------------------------------------------------------------------------------------- OBLICZANIE POWIERZCHNI DODATKOWEJ KONDYGNACJI (IV POZIOM) --------------------
+# ----------------------------------------------------------------------------------------------------- CALCULATION OF ADDITIONAL FLOOR AREA (FOURTH LEVEL) --------------------
 import math
 
 # --- ZMIENNE POMOCNICZE --- Wzór: (DK + DB - cofnięcie_IV)
@@ -859,7 +859,7 @@ raport_iv = (
 
 TaskDialog.Show("Area – Additional floor (IV)", raport_iv)
 
-# -------------------------------------------------------------------------------------------------------------- PODSUMOWANIE CAŁKOWITE POWIERZCHNI --------------------
+# -------------------------------------------------------------------------------------------------------------- TOTAL AREA SUMMARY --------------------
 
 try: # wybranie wszystkich trzech zmiennych
     total_all_m2 = suma_parter_m2 + suma_trzy_pietra_m2 + suma_iv_m2
@@ -883,7 +883,7 @@ raport_total = (
 
 TaskDialog.Show("TOTAL SUMMARY", raport_total)
 
-# -------------------------------------------------------------------------------------MODUŁ WALIDACJI MPZP – wersja z PBC% i współczynnikiem nadziemia
+# -------------------------------------------------------------------------------------MPZP VALIDATION MODULE – version with PBC% and above-ground coefficient
 import math
 
 # --- Stałe MPZP / parametry działki ---
@@ -927,7 +927,7 @@ try:
 except:
     total_all_area = 0.0
 
-# ----------------------------------------------------------------------------------- OBLICZENIA -----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------- CALCULATIONS -----------------------------------------------------------------------------------
 
 PBC_current = site_area_m2 - floor_area - paved_allowance # Powierzchnia biologicznie czynna (PBC)
 if PBC_current < 0:
@@ -962,7 +962,7 @@ ok_height = (wysokosc_calkowita_m <= max_allowed_height_m + 1e-6)
 # 6️⃣ Linia zabudowy
 line_of_building_check = "UNVERIFIED – requires analysis of geometry in the model"
 
-# --------------------------------------------------------------------- WALIDACJA I RAPORTOWANIE ------------------------------------------------------------
+# --------------------------------------------------------------------- VALIDATION AND REPORTING ------------------------------------------------------------
 
 errors = []
 
@@ -993,7 +993,7 @@ if not ok_height:
         "5️⃣ The height of the building {:.2f} m exceeds the permissible limit {:.2f} m.".format(
             wysokosc_calkowita_m, max_allowed_height_m))
 
-# -------------------------------------------------------------------------WYNIK WALIDACJI
+# -------------------------------------------------------------------------VALIDATION RESULT--------------------------------------------------------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
 
 if errors:
