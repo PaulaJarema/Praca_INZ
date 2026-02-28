@@ -21,20 +21,20 @@ cofniecie_lica_ft = cofniecie_lica_m * foot
 
 # --------------------------------------------------------------------------------------------------------------------------- komunikat startowy -------------------------------------------------------------------------------------------------------------------------------------------------------------
 main_message = (
-    "Generacja kompozycji urbanistycznej nastąpi z uwzględnieniem stałych parametrów projektowych, założeń funkcjonalnych oraz uwarunkowań formalno-prawnych zgodnie z Miejscowym Planem Zagospodarowania Przestrzennego:\n\n"
-    "1) Maksymalna powierzchnia zabudowy: 60%.\n"
-    "2) Minimalny udział procentowy powierzchni biologicznie czynnej: 25%.\n"
-    "3) Zakres dopuszczalnej intensywności zabudowy: 1,2 – 3,2.\n\n"
-    "Dodatkowe ustalenia i założenia funkcjonalne:\n\n"
-    " - Wariantowanie brył budynku nastąpi zgodnie z funkcjonalnością przewidzianą dla usług nauki z usługami z zakresu kultury, gastronomii lub handlu w parterach budynków.\n"
-    " - Powierzchnia całkowita parteru nie może stanowić więcej niż 60% powierzchni całkowitej pierwszego piętra.\n"
-    " - Ustalenia planistyczne dopuszczają zastosowanie dachu płaskiego.\n\n"
-    "Uwaga dot. działek i linii zabudowy:\n\n"
-    " - Dla działek ewidencyjnych nr 7/3, 7/4 oraz 7/5 ustala się maksymalną wysokość zabudowy na 12,0 m.\n"
-    " - Dla działki ewidencyjnej nr 7/6 dopuszcza się maksymalną wysokość zabudowy do 16,0 m, pod warunkiem zgodności ze wszystkimi pozostałymi ustaleniami MPZP.\n"
-    " - Miejsce generacji brył budynku jest nierozerwalnie związane z usytuowaniem obowiązującej linii zabudowy oraz nieprzekraczalnej linii zabudowy.\n"
-    " - W celu zapewnienia spójności kompozycyjnej zdefiniowano pomocnicze geometrie referencyjne.\n"
-    " - Zakaz prac ziemnych dotyczy cennych drzew w obrębie rzutu korony lub w odległości < 3.0 m od pnia (z wyjątkiem metod nieinwazyjnych).\n"
+    "The urban composition will be created taking into account fixed design parameters, functional assumptions, and formal and legal conditions in accordance with the Local Spatial Development Plan:\n\n"
+    "1) Maximum building area: 60%.\n"
+    "2) Minimum percentage of biologically active area: 25%.\n"
+    "3) Permissible building density: 1,2 – 3,2.\n\n"
+    "Additional functional provisions and assumptions:\n\n"
+    " - The building's structure will be designed in accordance with its intended functionality for educational services with cultural, catering, or commercial services on the ground floors of the buildings.\n"
+    " - The total area of the ground floor may not exceed 60% of the total area of the first floor.\n"
+    " - The planning provisions allow for the use of a flat roof.\n\n"
+    "Note regarding plots and building lines:\n\n"
+    " - For plots No. 7/3, 7/4, and 7/5, the maximum building height is set at 12.0 m.\n"
+    " - For plot no. 7/6, the maximum building height is 16.0 m, provided that all other provisions of the local zoning plan are complied with.\n"
+    " - The location of building structures is inextricably linked to the location of the applicable building line and the building line that cannot be crossed.\n"
+    " - In order to ensure compositional consistency, auxiliary reference geometries have been defined.\n"
+    " - Earthworks are prohibited in the vicinity of valuable trees within the crown projection or at a distance of < 3.0 m from the trunk (except for non-invasive methods).\n"
 )
 
 TaskDialog.Show("Start", main_message)
@@ -43,52 +43,52 @@ TaskDialog.Show("Start", main_message)
 try:
    
     glebokosc_kolumn_m = float(Interaction.InputBox( #DK
-        "Głębokość strefy podcienia [m] (min 6.0, max 20.0)",
-        "Głębokość strefy podcienia", "8.5").replace(',', '.'))
+        "Depth of the undercut zone [m] (min 6.0, max 20.0)",
+        "Depth of the undercut zone", "8.5").replace(',', '.'))
     if not (6.0 <= glebokosc_kolumn_m <= 20.0):
-        TaskDialog.Show("Błąd", "Wartość 'Głębokość strefy podcienia musi być pomiędzy 6.0m a 20.0m.")
+        TaskDialog.Show("Error", "The value the depth of the underpass zone must be between 6.0m and 20.0m.")
         sys.exit()
 
     glebokosc_budynku_m = float(Interaction.InputBox( #DB
-        "Głębokość bryły budynku za kolumnami [m] (min 6.0, max 20.0)",
-        "Głębokość bryły budynku za kolumnami", "8.5").replace(',', '.'))
+        "Depth of the building behind the columns  [m] (min 6.0, max 20.0)",
+        "Depth of the building behind the columns", "8.5").replace(',', '.'))
     if not (6.0 <= glebokosc_budynku_m <= 20.0):
-        TaskDialog.Show("Błąd", "Wartość 'Głębokość bryły budynku za kolumnami musi być pomiędzy 6.0m a 20.0m.")
+        TaskDialog.Show("Error", "Value The depth of the building structure behind the columns must be between 6.0m a 20.0m.")
         sys.exit()
 
     col_spacing_m = float(Interaction.InputBox(
-        "Rozstaw osiowy kolumn [m] (min 4.0, max 8.0)",
-        "Rozstaw osiowy kolumn", "5.0").replace(',', '.'))
+        "Axle spacing of columns [m] (min 4.0, max 8.0)",
+        "Axle spacing of columns", "5.0").replace(',', '.'))
     if not (4.0 <= col_spacing_m <= 8.0):
-        TaskDialog.Show("Błąd", "Wartość 'Rozstaw osiowy kolumn' musi być pomiędzy 4.0m a 8.0m.")
+        TaskDialog.Show("Error", "The value of the column center distance must be between 4.0 m and 8.0 m.")
         sys.exit()
 
     cofniecie_iv_m = float(Interaction.InputBox(
-        "Wycofanie V kondygnacji w głąb lica [m] (min 2.4, max 6.0)",
-        "Wycofanie V kondygnacji w głąb lica", "4.5").replace(',', '.'))
+        "Withdrawal of the fifth floor into the facade [m] (min 2.4, max 6.0)",
+        "Withdrawal of the fifth floor into the facade", "4.5").replace(',', '.'))
     if not (2.4 <= cofniecie_iv_m <= 6.0):
-        TaskDialog.Show("Błąd", "Wartość 'Wycofanie V kondygnacji w głąb lica' musi być pomiędzy 2.4m a 6.0m.")
+        TaskDialog.Show("Error", "Wartość 'The recess of the fifth floor into the facade must be between 2.4m a 6.0m.")
         sys.exit()
 
     glebokosc_audytorium_ns_m = float(Interaction.InputBox(
-        "Głębokość strefy audytorium wciętej w głąb działki [m] (min 15.0, max 30.0)",
-        "Głębokość strefy audytorium wciętej w głąb działki", "20.0").replace(',', '.'))
+        "The depth of the auditorium area cut into the plot [m] (min 15.0, max 30.0)",
+        "The depth of the auditorium area cut into the plot", "20.0").replace(',', '.'))
     if not (15.0 <= glebokosc_audytorium_ns_m <= 30.0):
-        TaskDialog.Show("Błąd", "Wartość 'Głębokość strefy audytorium' musi być pomiędzy 15.0m a 30.0m.")
+        TaskDialog.Show("Error", "Wartość 'Value The depth of the auditorium zone must be between 15.0m a 30.0m.")
         sys.exit()
 
 except:
-    TaskDialog.Show("Błąd", "Wprowadzono nieprawidłową wartość. Przerwano skrypt.")
+    TaskDialog.Show("Error", "An invalid value has been entered. The script has been terminated.")
     sys.exit()
 
 # walidacje MPZP; na potrzebę przyjęcia danych "krańcowych" ---------------------------------------------------
 if glebokosc_kolumn_m + glebokosc_budynku_m > max_glebokosc_m:
-    TaskDialog.Show("Brak zgodności z MPZP", "Suma głębokości przekracza {} m.".format(max_glebokosc_m))
+    TaskDialog.Show("Non-compliance with the local zoning plan“, ”The total depth exceeds {} m.".format(max_glebokosc_m))
     sys.exit()
 
 min_glebokosc_podcienia_m = (2.0 / 3.0) * glebokosc_budynku_m
 if glebokosc_kolumn_m < min_glebokosc_podcienia_m:
-    TaskDialog.Show("Brak zgodności z MPZP", "Powierzchnia całkowita parteru stanowi więcej niż 60% powierzchni całkowitej pierwszego piętra; Głębokość kolumn zbyt mała względem głębokości budynku (min {:.2f}m).".format(min_glebokosc_podcienia_m))
+    TaskDialog.Show("Non-compliance with the local zoning plan“, ”The total area of the ground floor constitutes more than 60% of the total area of the first floor; The depth of the columns is too small in relation to the depth of the building. (min {:.2f}m).".format(min_glebokosc_podcienia_m))
     sys.exit()
 
 # działania na danych i konwersje jednostek ---------------------------------------------------------------
@@ -117,7 +117,7 @@ auditorium_line_ids = [ElementId(1282579), ElementId(1283599), ElementId(1283696
 # ------------------------------------------------------------------------------------------------------- poziomy, wewnętrzne zabezpieczenie, gdyby nie było utworzonych minimalnej liczny o --------------------
 levels = sorted(list(FilteredElementCollector(doc).OfClass(Level)), key=lambda x: x.Elevation) #kolektor przeszukujący cały dokument projektowy, tworzy całą listę ze zmiennymi X jako współżędna
 if len(levels) < 2: #wybranie elementu level czyli poziom, sprawdza ile elementów znajduej się na liście "levels" --> obliczanie wysokości parteru (jeden poziom lub zadnego --> wróba dowołania przerwie się błędem)
-    TaskDialog.Show("Błąd", "Projekt musi zawierać co najmniej dwa poziomy.")
+    TaskDialog.Show("Error“, ”The project must contain at least two levels.")
     sys.exit()
 poziom_0 = levels[0] #przypisanie poziomów do zmiennych
 poziom_1 = levels[1]
@@ -164,13 +164,13 @@ if not wall_type: # Jeśli nie ma "generic"
 col_type = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_StructuralColumns).FirstElement()
 
 if not wall_type or not col_type:
-    TaskDialog.Show("Błąd", "Brak typu ściany lub kolumny w projekcie.")
+    TaskDialog.Show("Error“, ”No wall or column type in the design.")
     sys.exit()
 
 # ----------Wybór typu stropu; na potrzeby projekotwe - identyczny ---
 floor_type = FilteredElementCollector(doc).OfClass(FloorType).FirstElement()
 if not floor_type:
-    TaskDialog.Show("Błąd", "Brak typu stropu (FloorType) w projekcie.")
+    TaskDialog.Show("Error“, ”No floor type (FloorType) in the project.")
     sys.exit()
     
 # -------------------------------------------------------------------------------------------------------- transakcja --------------------
@@ -188,7 +188,7 @@ def create_floor_from_curves(curves_list, level, f_type, height_offset=0.0): #de
                 loop.Append(c)
         
         if loop.IsOpen():
-            print("Ostrzeżenie: Pętla dla stropu na poziomie '{}' jest otwarta. Pomijam.".format(level.Name))
+            print("Warning: The loop for ceiling at level ‘{}’ is open. I am ignoring it. Pomijam.".format(level.Name))
             return None
 
         profile = List[CurveLoop]()
@@ -202,12 +202,12 @@ def create_floor_from_curves(curves_list, level, f_type, height_offset=0.0): #de
                 offset_param.Set(height_offset)
         return floor
     except Exception as e:
-        print("Błąd tworzenia stropu na poziomie {}: {}".format(level.Name, e))
+        print("Error creating ceiling at level {}: {}".format(level.Name, e))
         return None
         
 # ---------------------------------------------------------------------rozpoczęcie tranzakcji------------
 
-t = Transaction(doc, "Generatywny budynek z bezpiecznymi offsetami")
+t = Transaction(doc, "Generative building with safe offsets")
 t.Start()
 
 if not col_type.IsActive:
@@ -234,7 +234,7 @@ for line_id in line_ids:
 
         length = curve.Length
         if length <= 0.0:
-            print("Pominięto linię {}: długość 0.".format(line_id.Value))
+            print("The line was skipped {}: długość 0.".format(line_id.Value))
             continue
 
         num_cols = int(length / col_spacing_ft) + 1
@@ -268,7 +268,7 @@ for line_id in line_ids:
             try:
                 Wall.Create(doc, Line.CreateBound(a, b), wall_type.Id, poziom_0.Id, wysokosc_parteru_ft, 0.0, False, False)
             except Exception as e:
-                print("Nie utworzono ściany parteru (linia {}): {}".format(line_id.Value, e))
+                print("The ground floor wall has not been created (line {}): {}".format(line_id.Value, e))
 
         # piętra
         p1_gora = start
@@ -281,7 +281,7 @@ for line_id in line_ids:
             try:
                 Wall.Create(doc, Line.CreateBound(a, b), wall_type.Id, poziom_1.Id, wys_powyzej_ft, 0.0, False, False)
             except Exception as e:
-                print("Nie utworzono ściany pięter (linia {}): {}".format(line_id.Value, e))
+                print("No floor walls have been created (line {}): {}".format(line_id.Value, e))
 
         # --- DODANO: Strop dla pięter (na poziomie IV, jako "dach" bryły 1-III / podłoga IV) ---
         if level_iv: # Używamy poziomu IV jako dachu dla bryły I-III
@@ -294,7 +294,7 @@ for line_id in line_ids:
         # --- KONIEC DODANO ---
 
     except Exception as e:
-        print("Błąd w linii {}: {}".format(line_id.Value, e))
+        print("Error in line {}: {}".format(line_id.Value, e))
 
 # -------------------------------------------------------------------------------------------------- dodatkowa kondygnacja IV (bez rollback) --------------------
 wys_dodatkowej_kondygnacji_m = 4.0 #wskazanie wysokości
@@ -306,11 +306,11 @@ if level_iv: #rozpoczyna pętlę dla Level IV
         try: #zabezpieczenie, kiedy linia nie jest elementem liniowym, np krzywa lub jej brak, przeskakuje i kod idzie dalej
             line_elem = doc.GetElement(line_id)
             if not line_elem or not hasattr(line_elem, "Location"):
-                print("Pominięto linię IV (brak elementu): {}".format(line_id.Value))
+                print("Line IV omitted (element missing): {}".format(line_id.Value))
                 continue
             curve = line_elem.Location.Curve
             if not curve:
-                print("Pominięto linię IV (brak geometrii): {}".format(line_id.Value))
+                print("Line IV omitted (no geometry): {}".format(line_id.Value))
                 continue
 
             start = curve.GetEndPoint(0) #lokalizauje punkt XYZ
@@ -332,7 +332,7 @@ if level_iv: #rozpoczyna pętlę dla Level IV
                     Wall.Create(doc, Line.CreateBound(a, b), wall_type.Id, level_iv.Id, #w danym dokumencie; wzdłuż wybranej krzywej, ze ścianą o danym ID; która jest na poziomie IV; o wysokości 4m
                                 wys_dodatkowej_kondygnacji_ft, 0.0, False, False) #offset, flip, structural
                 except Exception as e:
-                    print("Nie utworzono ściany IV (linia {}): {}".format(line_id.Value, e))
+                    print("No wall IV (line {}): {}".format(line_id.Value, e))
 
             floor_curves_iv = List[Curve]() #dodanie stropu dachowego --> obrys stworzony na podstawie obrysu ścian
             floor_curves_iv.Add(Line.CreateBound(p1, p2))
@@ -344,7 +344,7 @@ if level_iv: #rozpoczyna pętlę dla Level IV
         except Exception as e: #wyszukuje błąd w całej pętli
             print("Błąd kondygnacji IV (linia {}): {}".format(line_id.Value, e))
 else:
-    TaskDialog.Show("Uwaga", "Nie znaleziono poziomu 'IV'. Kondygnacja nie została utworzona.")
+    TaskDialog.Show("Attention,“ ”Level ‘IV’ not found. The floor has not been created.")
 
 # ----------------------------------------------------------------------------------------------------------------------- audytorium --------------------
 wysokosc_audytorium_6m_ft = 6.0 * foot #konwersja jednostek
@@ -409,13 +409,13 @@ for auditorium_line_id in auditorium_line_ids: #rozpoczęcie po wszystkich linia
             offset_sign = -1.0
             radius_ft = curve.Radius
             if glebokosc_audytorium_do_uzycia_ft >= (radius_ft - 0.1):
-                print("Pominięto łuk audytorium {}: głębokość >= promień.".format(auditorium_line_id.Value))
+                print("The arc of the auditorium {}: depth >= radius has been omitted.".format(auditorium_line_id.Value))
                 continue
 
             arc_front = curve
             arc_back = curve.CreateOffset(offset_sign * glebokosc_audytorium_do_uzycia_ft, XYZ.BasisZ)
             if (arc_front is None) or (arc_back is None):
-                print("Pominięto audytorium (offsety) dla łuku {}".format(auditorium_line_id.Value))
+                print("The auditorium (offsets) for the arch has been omitted. {}".format(auditorium_line_id.Value))
                 continue
 
             try: #tworzy 4 ściany --> dwa łuki i dwie linie proste
@@ -424,7 +424,7 @@ for auditorium_line_id in auditorium_line_ids: #rozpoczęcie po wszystkich linia
                 Wall.Create(doc, Line.CreateBound(arc_front.GetEndPoint(0), arc_back.GetEndPoint(0)), wall_type.Id, poziom_0.Id, wysokosc_do_uzycia, 0.0, False, False)
                 Wall.Create(doc, Line.CreateBound(arc_front.GetEndPoint(1), arc_back.GetEndPoint(1)), wall_type.Id, poziom_0.Id, wysokosc_do_uzycia, 0.0, False, False)
             except Exception as e:
-                print("Nie utworzono ścian audytorium (łuk {}): {}".format(auditorium_line_id.Value, e))
+                print("The walls of the auditorium arch were not created (arch {}): {}".format(auditorium_line_id.Value, e))
 
             if auditorium_line_id.Value in ids_audytorium_6m: # Dla tych o wysokości 6m, z 'arc_front' i 'arc_back' do def kształtu i stwarza strop na poziomie 0 z offsetem 6m
                 floor_curves_aud_arc = List[Curve]()
@@ -444,7 +444,7 @@ for auditorium_line_id in auditorium_line_ids: #rozpoczęcie po wszystkich linia
                     create_floor_from_curves(floor_curves_aud_arc, level_iv, floor_type, 0.0)
             # --- KONIEC ZMODYFIKOWANO ---
     except Exception as e:
-        print("Błąd audytorium (linia {}): {}".format(auditorium_line_id.Value, e))
+        print("Auditorium error (line {}): {}".format(auditorium_line_id.Value, e))
 
 # ------------------------------------------------------------------------------------------------------------------ łuki łączące (bezpieczne offsety) --------------------
 adjusted_arcs = []
@@ -462,14 +462,14 @@ for arc_id in arc_ids:
         radius_ft = curve.Radius #pobieranie geomoerii łuku
         length = curve.Length
         if length <= 0.0:
-            print("Pominięto łuk {}: długość 0.".format(arc_id.Value))
+            print("The { } arc was omitted: length 0.".format(arc_id.Value))
             continue
 
         # jeśli całkowita głębokość >= radius - buffer -> przycinamy do safe depth
         if calkowita_glebokosc_ft >= (radius_ft - buffer_ft):
             effective_depth_ft = max(0.0, radius_ft - buffer_ft)
             if effective_depth_ft <= 0.01:
-                print("Pominięto łuk {}: efektywna głębokość zbyt mała.".format(arc_id.Value))
+                print("Arc {}: effective depth too small.".format(arc_id.Value))
                 continue
             adjusted_arcs.append((arc_id.Value, calkowita_glebokosc_ft / foot, effective_depth_ft / foot)) #zapisanie informacji o modyfikacji do dziennika
             depth_for_use_ft = effective_depth_ft #używanie bezpiecznej głębokości do dalszych obliczeń
@@ -513,7 +513,7 @@ for arc_id in arc_ids:
 
         # jeśli safe offsety zbyt małe -> pominąć tworzenie po łuku
         if safe_front_abs <= 0.01 or safe_back_abs <= 0.01:
-            print("Pominięto tworzenie ścian dla łuku {}: safe offset zbyt mały.".format(arc_id.Value))
+            print("Wall creation for arc {} omitted: safe offset too small.".format(arc_id.Value))
             continue
 
         try: #stworzenie końcowych łuków dla ścian
@@ -526,18 +526,18 @@ for arc_id in arc_ids:
             arc_back = None
 
         if (arc_front is None) or (arc_back is None):
-            print("Pominięto łuk {}: nie udało się utworzyć offsetów (arc_front/arc_back None).".format(arc_id.Value))
+            print("Arc { } omitted: unable to create offsets (arc_front/arc_back None).".format(arc_id.Value))
             continue
 
         if arc_front.Length < 0.001 or arc_back.Length < 0.001: # pomijaj jeśli długość offsetów znikoma
-            print("Pominięto łuk {}: offsety mają zbyt małą długość.".format(arc_id.Value))
+            print("The arc { } has been omitted; the offsets are too short.".format(arc_id.Value))
             continue
 
         try: # tworzenie ścian parteru po łuku
             Wall.Create(doc, arc_front, wall_type.Id, poziom_0.Id, wysokosc_parteru_ft, 0.0, False, False)
             Wall.Create(doc, arc_back, wall_type.Id, poziom_0.Id, wysokosc_parteru_ft, 0.0, False, False)
         except Exception as e:
-            print("Błąd tworzenia ścian parteru dla łuku {}: {}".format(arc_id.Value, e))
+            print("Error creating ground floor walls for an arch {}: {}".format(arc_id.Value, e))
             # próbujemy zmniejszyć safe_back_abs i ponowić raz
             reduced = max(0.01, safe_back_abs - 0.1)
             try:
@@ -545,7 +545,7 @@ for arc_id in arc_ids:
                 if arc_back_try and arc_back_try.Length > 0.001:
                     Wall.Create(doc, arc_back_try, wall_type.Id, poziom_0.Id, wysokosc_parteru_ft, 0.0, False, False)
             except Exception as e2:
-                print("Ponowna próba nieudana dla łuku {}: {}".format(arc_id.Value, e2))
+                print("Another unsuccessful attempt for the bow {}: {}".format(arc_id.Value, e2))
 
         try: # łączące końcowe odcinki (zaślepki)
             a0 = arc_front.GetEndPoint(0)
@@ -557,7 +557,7 @@ for arc_id in arc_ids:
             if not a1.IsAlmostEqualTo(b1):
                 Wall.Create(doc, Line.CreateBound(a1, b1), wall_type.Id, poziom_0.Id, wysokosc_parteru_ft, 0.0, False, False)
         except Exception as e:
-            print("Błąd zamknięć parteru łuku {}: {}".format(arc_id.Value, e))
+            print("Error closing the ground floor of the arch {}: {}".format(arc_id.Value, e))
 
         try: # piętra - podobnie z bezpiecznym offsetem
             arc_back_floor = curve.CreateOffset(-1.0 * safe_back_abs, XYZ.BasisZ)
@@ -572,9 +572,9 @@ for arc_id in arc_ids:
                     if not curve.GetEndPoint(1).IsAlmostEqualTo(arc_back_floor.GetEndPoint(1)):
                         Wall.Create(doc, Line.CreateBound(curve.GetEndPoint(1), arc_back_floor.GetEndPoint(1)), wall_type.Id, poziom_1.Id, wys_powyzej_ft, 0.0, False, False)
                 except Exception as e:
-                    print("Błąd tworzenia piętra dla łuku {}: {}".format(arc_id.Value, e))
+                    print("Error creating floor for arc {}: {}".format(arc_id.Value, e))
         except Exception as e:
-            print("Błąd offsetowania piętra dla łuku {}: {}".format(arc_id.Value, e))
+            print("Floor offset error for arc {}: {}".format(arc_id.Value, e))
 
         if level_iv: #Strop dla pięter (na poziomie IV, jako "dach" bryły 1-III) ---
             try:
@@ -585,10 +585,10 @@ for arc_id in arc_ids:
                 floor_curves_arc_12m.Add(Line.CreateBound(arc_back_floor.GetEndPoint(0), curve.GetEndPoint(0))) # 4. Dodaj boczną zaślepkę 2 (prostą linię)
                 create_floor_from_curves(floor_curves_arc_12m, level_iv, floor_type) # Wywołaj funkcję pomocniczą z gotowym profilem
             except Exception as e:
-                print("Błąd tworzenia stropu 12m (łuk {}) {}".format(arc_id.Value, e))
+                print("Error creating 12m ceiling (arch {}) {}".format(arc_id.Value, e))
 
     except Exception as e:
-        print("Nie udało się przetworzyć łuku {}: {}".format(arc_id.Value, e))
+        print("Failed to process the arc {}: {}".format(arc_id.Value, e))
 
 # -------------------------------------------------------------------------------------------------------------- dodatkowa kondygnacja 4 m nad łukami --------------------
 try: # znajdź poziom "IV level"
@@ -600,7 +600,7 @@ try: # znajdź poziom "IV level"
             break
 
     if poziom_IV is None: #jeśli pętla nie znalazła poziomu 4 w dokumencie 
-        TaskDialog.Show("Błąd", "Nie znaleziono poziomu 'IV' / 'Poziom 4' — pominięto nadbudowę łuków.")
+        TaskDialog.Show("Error“, ”Level ‘IV’ / ‘Level 4’ not found — arch superstructure omitted.")
     else:
         wysokosc_dodatkowej_kondygnacji_m = 4.0 # --- Jeśli Poziom IV został znaleziony, kontynuuj ---
         wysokosc_dodatkowej_kondygnacji_ft = wysokosc_dodatkowej_kondygnacji_m * foot #konwersja jednostek
@@ -627,7 +627,7 @@ try: # znajdź poziom "IV level"
 
                 # Sprawdzamy tylko 'safe_back_abs'
                 if safe_back_abs <= 0.01:
-                    print("Pominięto nadbudowę łuku {}: safe_back_abs zbyt mały.".format(arc_id.Value))
+                    print("The superstructure of the arc {}: safe_back_abs too small has been omitted.".format(arc_id.Value))
                     continue
 
                 arc_back = None # utwórz TYLKO tylny łuk
@@ -637,7 +637,7 @@ try: # znajdź poziom "IV level"
                     pass # Błąd offsetu, Zignoruj błąd
 
                 if not arc_back or arc_back.Length < 0.001: # Sprawdź, czy 'arc_back' został pomyślnie utworzony
-                    print("Pominięto nadbudowę łuku {}: nie udało się utworzyć arc_back.".format(arc_id.Value))
+                    print("The superstructure of the arc {} has been omitted; arc_back could not be created.".format(arc_id.Value))
                     continue
                 
                 Wall.Create(doc, curve, wall_type.Id, poziom_IV.Id, wysokosc_dodatkowej_kondygnacji_ft, 0.0, False, False)  # 1. Tworzenie ściany frontowej DOKŁADNIE na 'curve'
@@ -661,10 +661,10 @@ try: # znajdź poziom "IV level"
                 create_floor_from_curves(floor_curves_arc_16m, poziom_IV, floor_type, wysokosc_dodatkowej_kondygnacji_ft) #funkcja pomocnicza do profilu tworzenia stropu; o danym profilu, zaczepiony na danym poziomie, z użytym stropem ale odsuniety o 4m
 
             except Exception as e: # To jest 'except' dla wewnętrznego 'try' - łapie błąd dla JEDNEGO łuku
-                print("Błąd przy tworzeniu nadbudowy łuku {}: {}".format(arc_id.Value, e))
+                print("Error when creating an arc superstructure {}: {}".format(arc_id.Value, e))
 
 except Exception as e: # To jest 'except' dla zewnętrznego 'try' - łapie błąd np. przy wyszukiwaniu poziomu
-    print("Błąd ogólny przy tworzeniu kondygnacji nad łukami:", e)
+    print("General error when creating floors above arches:", e)
 
 # ---------------------------------------------------------------------------------------------------------------- NOWA SEKCJA: ściany specjalne 16m na łukach --------------------
 try:
@@ -675,24 +675,24 @@ try:
         try:
             arc_elem = doc.GetElement(arc_id) #pobieranie elementu z projektu
             if not arc_elem or not hasattr(arc_elem, "Location"): #sprawdznie czy dany element istnieje i czy ma właściwość 'location"
-                print("Pominięto łuk 16m (brak elementu): {}".format(arc_id.Value))
+                print("The 16m arch has been omitted (element missing): {}".format(arc_id.Value))
                 continue
             curve = arc_elem.Location.Curve #połącz geometrię czyli krzywą z elementu 
             if not isinstance(curve, Arc):
-                print("Pominięto łuk 16m (nie jest łukiem): {}".format(arc_id.Value))
+                print("The 16m arc has been omitted (it is not an arc): {}".format(arc_id.Value))
                 continue
             
             if curve.Length < 0.01: #kolejne sprawdzenie czyli czy ma jakąś długość większą od 0
-                print("Pominięto łuk 16m (za krótki): {}".format(arc_id.Value))
+                print("The 16m arc was omitted (too short): {}".format(arc_id.Value))
                 continue
 
             Wall.Create(doc, curve, wall_type.Id, poziom_0.Id, wysokosc_16m_ft, 0.0, False, False) # Tworzenie ściany o wysokości 16m na poziomie 0
 
         except Exception as e: #obsługa dla błędu wewnętrznego
-            print("Błąd przy tworzeniu ściany 16m na łuku {}: {}".format(arc_id.Value, e))
+            print("Error when creating a 16m wall on a curve {}".format(arc_id.Value, e))
 
 except Exception as e: #obsługa dla błędu całego modułu
-    print("Błąd ogólny przy tworzeniu ścian 16m:", e)
+    print("General error when creating 16m walls:", e)
 
 # ----------------------------------------------------------------------------------------------------------------------- OBLICZANIE POWIERZCHNI PARTERU --------------------
 import math
@@ -728,14 +728,14 @@ suma_parter_m2 = round(suma_parter_m2, 2)
 
 # --- RAPORT ---
 raport = (
-    "POWIERZCHNIA PARTERU (m²)\n\n"
-    "1. Audytorium: {} m²\n"
-    "2. Bryła od ul. Furmańskiej: {} m²\n"
-    "3. Łuk ul. Furmańska–Karowa (R = {:.2f} m): {} m²\n"
-    "4. Bryła ul. Karowa: {} m²\n"
-    "5. Łuk Karowa–Dobra (R = {:.2f} m): {} m²\n"
-    "6. Bryła ul. Dobrej: {} m²\n\n"
-    "SUMA PARTERU: {} m²".format(
+    "GROUND FLOOR AREA (m²)\n\n"
+    "1. Auditorium: {} m²\n"
+    "2. Building from Furmańska Street:  {} m²\n"
+    "3. Furmańska–Karowa Street arch (R = {:.2f} m): {} m²\n"
+    "4. Building on Karowa Street:  {} m²\n"
+    "5. Karowa–Dobra arch (R = {:.2f} m): {} m²\n"
+    "6. Building on Dobra Street: {} m²\n\n"
+    "TOTAL GROUND FLOOR: {} m²".format(
         pow_audytorium_m2,
         pow_furmanska_m2,
         glebokosc_budynku_m, pow_karowa_luk1_m2,
@@ -746,7 +746,7 @@ raport = (
     )
 )
 
-TaskDialog.Show("Powierzchnia zabudowy – Parter", raport)
+TaskDialog.Show("Building area – Ground floor", raport)
 
 # ------------------------------------------------------------------------------------------------------------------ OBLICZANIE POWIERZCHNI I–III PIĘTRA --------------------
 import math
@@ -784,14 +784,14 @@ suma_trzy_pietra_m2 = round(suma_trzy_pietra_m2, 2)
 
 # --- RAPORT ---
 raport_pietra = (
-    "POWIERZCHNIA I–III PIĘTRA (m²)\n\n"
-    "1. Bryła od ul. Furmańskiej: {} m²\n"
-    "2. Łuk ul. Furmańska–Karowa (R = {:.2f} m): {} m²\n"
-    "3. Bryła ul. Karowa: {} m²\n"
-    "4. Łuk Karowa–Dobra (R = {:.2f} m): {} m²\n"
-    "5. Bryła od ul. Dobrej: {} m²\n\n"
-    "Powierzchnia jednego piętra: {} m²\n"
-    "Powierzchnia 3 pięter (I–III): {} m²".format(
+    "AREA OF FLOORS I–III (m²)\n\n"
+    "1. Building from Furmańska Street: {} m²\n"
+    "2. Furmańska–Karowa Street arch (R = {:.2f} m): {} m²\n"
+    "3. Building on Karowa Street: {} m²\n"
+    "4. Arch Karowa–Dobra  (R = {:.2f} m): {} m²\n"
+    "5. Building from Dobra Street:  {} m²\n\n"
+    "Area of one floor: {} m²\n"
+    "Area of 3 floors (I–III): {} m²".format(
         pow_furmanska_pietro_m2,
         glebokosc_calkowita_m, pow_karowa_luk1_pietro_m2,
         pow_karowa_pietro_m2,
@@ -802,7 +802,7 @@ raport_pietra = (
     )
 )
 
-TaskDialog.Show("Powierzchnia – I–III Piętro", raport_pietra)
+TaskDialog.Show("Area – 1st–3rd floor", raport_pietra)
 
 # ----------------------------------------------------------------------------------------------------- OBLICZANIE POWIERZCHNI DODATKOWEJ KONDYGNACJI (IV POZIOM) --------------------
 import math
@@ -841,13 +841,13 @@ suma_iv_m2 = round(suma_iv_m2, 2)
 
 # --- RAPORT ---
 raport_iv = (
-    "POWIERZCHNIA DODATKOWEJ KONDYGNACJI (IV POZIOM)\n\n"
-    "1. Bryła od ul. Furmańskiej: {} m²\n"
-    "2. Łuk Furmańska–Karowa (R = {:.2f} m): {} m²\n"
-    "3. Bryła ul. Karowa: {} m²\n"
-    "4. Łuk Karowa–Dobra (R = {:.2f} m): {} m²\n"
-    "5. Bryła od ul. Dobrej: {} m²\n\n"
-    "SUMA IV POZIOMU: {} m²".format(
+    "ADDITIONAL STORY AREA (IV LEVEL)\n\n"
+    "1. Building from Furmańska Street: {} m²\n"
+    "2. Furmańska–Karowa arch (R = {:.2f} m): {} m²\n"
+    "3. Building on Karowa Street: {} m²\n"
+    "4. Karowa–Dobra arch (R = {:.2f} m): {} m²\n"
+    "5. Structure from Dobra Street: {} m²\n\n"
+    "TOTAL OF LEVEL IV: {} m²".format(
         pow_furmanska_iv_m2,
         glebokosc_calkowita_m, pow_karowa_luk1_iv_m2,
         pow_karowa_iv_m2,
@@ -857,7 +857,7 @@ raport_iv = (
     )
 )
 
-TaskDialog.Show("Powierzchnia – Dodatkowa kondygnacja (IV)", raport_iv)
+TaskDialog.Show("Area – Additional floor (IV)", raport_iv)
 
 # -------------------------------------------------------------------------------------------------------------- PODSUMOWANIE CAŁKOWITE POWIERZCHNI --------------------
 
@@ -869,11 +869,11 @@ except:
 total_all_m2 = round(total_all_m2, 2)
 
 raport_total = (
-    "PODSUMOWANIE POWIERZCHNI ZABUDOWY\n\n"
-    "Parter: {} m²\n"
-    "I–III piętro (łącznie): {} m²\n"
-    "IV (dodatkowa kondygnacja): {} m²\n\n"
-    "=== SUMA CAŁKOWITA: {} m² ===".format(
+    "SUMMARY OF BUILT-UP AREA\n\n"
+    "Ground floor:  {} m²\n"
+    "Floors I–III (total): {} m²\n"
+    "IV (additional floor): {} m²\n\n"
+    "=== TOTAL: {} m² ===".format(
         suma_parter_m2,
         suma_trzy_pietra_m2,
         suma_iv_m2,
@@ -881,7 +881,7 @@ raport_total = (
     )
 )
 
-TaskDialog.Show("PODSUMOWANIE CAŁKOWITE", raport_total)
+TaskDialog.Show("TOTAL SUMMARY", raport_total)
 
 # -------------------------------------------------------------------------------------MODUŁ WALIDACJI MPZP – wersja z PBC% i współczynnikiem nadziemia
 import math
@@ -960,7 +960,7 @@ except:
 ok_height = (wysokosc_calkowita_m <= max_allowed_height_m + 1e-6)
 
 # 6️⃣ Linia zabudowy
-line_of_building_check = "NIEZWERYFIKOWANA – wymaga analizy geometrii w modelu"
+line_of_building_check = "UNVERIFIED – requires analysis of geometry in the model"
 
 # --------------------------------------------------------------------- WALIDACJA I RAPORTOWANIE ------------------------------------------------------------
 
@@ -968,53 +968,53 @@ errors = []
 
 if not ok_max_coverage:
     errors.append(
-        "1️⃣ Powierzchnia zabudowy (1 piętro + 1000 m² = {:.2f} m²) "
-        "przekracza dopuszczalne 60% działki ({:.2f} m²).".format(
+        "1️⃣ Building area (1 floor + 1000 m² = {:.2f} m²) "
+        "exceeds the permissible 60% of the plot ({:.2f} m²).".format(
             max_zabudowa_check_value, max_building_area_m2))
 
 if not ok_min_PBC:
     errors.append(
-        "2️⃣ Powierzchnia biologicznie czynna zbyt mała: {:.2f} m² ({:.2f}%) < {:.2f} m² (25%).".format(
+        "2️⃣ Biologically active surface area too small: {:.2f} m² ({:.2f}%) < {:.2f} m² (25%).".format(
             PBC_current, PBC_percent, min_PBC_m2))
 
 if not ok_intensity:
     errors.append(
-        "3️⃣ Intensywność zabudowy I = {:.2f} poza zakresem [{:.2f}, {:.2f}] "
-        "(co odpowiada {:.2f}–{:.2f} m²).".format(
+        "3️⃣ Building density I = {:.2f} outside the range [{:.2f}, {:.2f}] "
+        "(which corresponds to {:.2f}–{:.2f} m²).".format(
             I_value, I_min, I_max, I_min_area, I_max_area))
 
 if not ok_above_ground:
     errors.append(
-        "4️⃣ Intensywność nadziemia I = {:.2f} przekracza dopuszczalne {:.2f}.".format(
+        "4️⃣ The above-ground intensity I = {:.2f} exceeds the permissible {:.2f}.".format(
             I_nadziem_value, I_nadziem_max))
 
 if not ok_height:
     errors.append(
-        "5️⃣ Wysokość zabudowy {:.2f} m przekracza dopuszczalne {:.2f} m.".format(
+        "5️⃣ The height of the building {:.2f} m exceeds the permissible limit {:.2f} m.".format(
             wysokosc_calkowita_m, max_allowed_height_m))
 
 # -------------------------------------------------------------------------WYNIK WALIDACJI
 # -----------------------------------------------------------------------------------
 
 if errors:
-    msg = "❌ Wykryto niezgodności z MPZP:\n\n"
+    msg = "❌ Non-compliance with the local zoning plan detected:\n\n"
     for e in errors:
         msg += " - " + e + "\n"
-    msg += "\n⚠️ Operacja przerwana z powodu naruszeń MPZP."
-    TaskDialog.Show("Błąd MPZP – Walidacja", msg)
+    msg += "\n⚠️ Operation interrupted due to violations of the local zoning plan."
+    TaskDialog.Show("Local development plan error – Validation", msg)
     t.RollBack()
     sys.exit()
 
 else:
     raport_mpzp = (
-        "✅ WALIDACJA MPZP – WYNIKI\n\n"
-        "Powierzchnia terenu 6.3 UN: {:.2f} m²\n"
-        "Całkowita powierzchnia zabudowy: {:.2f} m²\n"
+        "✅ VALIDATION OF THE LOCAL SPATIAL DEVELOPMENT PLAN – RESULTS\n\n"
+        "Area of land 6.3 UN: {:.2f} m²\n"
+        "Total building area: {:.2f} m²\n"
         "───────────────────────────────────────────────────────\n\n"
-        "1️⃣ Powierzchnia zabudowy: {:.2f} m² / max {:.2f} m² → ZGODNE ✅\n\n"
-        "2️⃣ Powierzchnia Biologicznie Czynna: {:.2f} m² ({:.2f}%) / min {:.2f} m² (25%) → ZGODNE ✅\n\n"
-        "3️⃣ Intensywność zabudowy (I): {:.2f} w zakresie [{:.2f}-{:.2f}] → ZGODNE ✅\n\n"
-        "4️⃣ Intensywność nadziemia (I): {:.2f} / max {:.2f} → ZGODNE ✅\n\n"
+        "1️⃣ Building area: {:.2f} m² / max {:.2f} m² → COMPLIANT ✅\n\n"
+        "2️⃣ Biologically active area: {:.2f} m² ({:.2f}%) / min {:.2f} m² (25%) → COMPLIANT ✅\n\n"
+        "3️⃣ Building intensity (I): {:.2f} w zakresie [{:.2f}-{:.2f}] → COMPLIANT ✅\n\n"
+        "4️⃣ Above-ground intensity (I): {:.2f} / max {:.2f} → COMPLIANT ✅\n\n"
         "───────────────────────────────────────────────────────\n"
     ).format(
         site_area_m2,
@@ -1025,8 +1025,8 @@ else:
         I_nadziem_value, I_nadziem_max
     )
 
-    TaskDialog.Show("✅ Walidacja MPZP – Zgodność", raport_mpzp)
+    TaskDialog.Show("✅ Zoning Plan Validation – Compliance", raport_mpzp)
 
 # ----------------------------------------------------------------------------------------------- commit ---------------------------------------------------------------------------------------------------------
 t.Commit()
-TaskDialog.Show("Zakończono", "Generowanie budynków zakończone.")
+TaskDialog.Show("Completed", "Building generation complete.")
